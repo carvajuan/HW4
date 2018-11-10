@@ -138,17 +138,19 @@ int main() {
 
 	ofstream archivo;
 	archivo.open("45.txt");
-	while (y>=0.0) {
+	while (y>=0.0)
+	{
 		Kutta(&t, &x,&y, &z, &f,h);
 
-		if (archivo.is_open()) {
+		if (archivo.is_open()) 
+		{
+			
 			archivo << x << " "<<y<< "\n";
-
 
 		}
 	}
 	archivo.close();
-
+	cout<<"La distancia recorrida en x cuando se lanza con un angulo de 45 grados es "<<x<<endl;
 
 
 	ofstream a;
@@ -244,6 +246,7 @@ int main() {
 	
 	a.close();
 	file.close();
+	cout<<"El proyectil alcanza su mayor distancia en x cuando se lanza con un angulo de 20 grados"<<endl;
 	return 0;
 }
 
