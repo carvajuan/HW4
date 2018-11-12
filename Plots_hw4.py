@@ -1,5 +1,7 @@
 import numpy as np
 import matplotlib.pylab as plt
+from mpl_toolkits import mplot3d
+
 
 datos=np.loadtxt("45.txt")
 dat=np.loadtxt("angulo.txt")
@@ -34,3 +36,25 @@ plt.title("Con angulo de 45 grados")
 plt.ylabel("y [m]")    
 plt.xlabel("x [m]") 
 plt.show()
+
+
+
+x_2 = np.linspace(0, 50, 50)
+y_2 = np.linspace(0, 50, 50)
+
+X, Y = np.meshgrid(x_2, y_2)
+Z = np.loadtxt("final.txt")
+
+fig = plt.figure()
+ax = plt.axes(projection='3d')
+
+ax.plot_surface(X, Y, Z, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.set_title('TEMPERATURA t=10s')
+ax.view_init(60, 35)
+fig
+
+
+
