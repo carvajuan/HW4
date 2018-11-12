@@ -40,7 +40,7 @@ int main(){
     ofstream pro; 
     pro.open("Temperatura_promedio.txt");
 	
-    //FRONTERAS FIJAS
+    //SE INICIALIZA
     iniciales(T_ANTES);
   
 	
@@ -68,6 +68,9 @@ int main(){
 
      archivo.close();
 	
+	
+	
+     //FRONTERAS FIJAS
      double t = 0;
      e = 0;
      while (t<T_max)
@@ -112,6 +115,8 @@ int main(){
     }
 
     a.close();
+	
+	
 	
     //FRONTERAS ABIERTAS
     iniciales(T_ANTES);
@@ -196,7 +201,7 @@ int main(){
 
 
      ofstream file;
-     file.open("Frontera_periodica.txt");
+     file.open("Fronteras_periodicas.txt");
 
 
     z = 0;
