@@ -16,7 +16,7 @@ using namespace std;
 int posicion(int i, int j);
 void iniciales(double *matriz);
 void paso(double *m, double *u_f, double delta_x, double delta_t, double condicion);
-
+void copia(double *viejo, double *nuevo);
 
 
 double COEF=K/(CP*ROH); //coeficiente de difusion
@@ -25,26 +25,13 @@ int main(){
   
     double *T_ANTES = (double*)malloc(N*N*sizeof(double)); 
     double *T_DESPUES =(double*)malloc(N*N*sizeof(double));
-    double dx=0.5; //paso espacial
-    double dt=0.01; //paso temporal
+    double dx=1.0; //paso espacial
+    double dt=0.03429; //paso temporal
     double alpha =(dt*COEF)/(dx*dx); 
 	
 	
     iniciales(T_ANTES);
   
-    int i, j, posi;
-
-	  for (i = 0; i < N; i++)
-	  {
-		  for (j = 0; j < N; j++)
-		    {
-			    posi = posicion(i, j);
-			    cout<<T_ANTES[posi]<<" " ;
-
-		    }
-		  cout << endl;
-	  }
-	
 	
     ofstream archivo;
     archivo.open("inicial.txt");
@@ -66,8 +53,41 @@ int main(){
 	}
 		archivo << "\n";
      }
+	
 
      archivo.close();
+	
+     double t = 0;
+	while (t<10)
+	{
+		paso(T_ANTES,T_DESPUES,dx,dt,1);
+		copia(T_DESPUES,T_ANTES);
+		t = t + dt;
+	}
+	
+   ofstream a;
+   a.open("final.txt");
+
+	
+	z = 0;
+	k = 0;
+	for (z = 0; z < N; z++)
+	{
+		for (k = 0; k < N; k++)
+		{
+			pos = posicion(z, k);
+			if (a.is_open())
+			{
+
+				a << T_DESPUES[pos] << " ";
+
+			}
+
+		}
+		a << "\n";
+	}
+
+	a.close();
 	
 
     return 0;
@@ -130,8 +150,56 @@ void paso(double *m, double *u_f, double delta_x, double delta_t, double condici
 
 			if ((j > 0) && (j < N - 1) && (i > 0) && (i < N - 1))
 			{
-				u_f[p] = m[p] + (COEF*delta_t / delta_x)*(arriba + abajo + izquierda + derecha - 4 * m[p]);
+			
+				if (sqrt(xx*xx + yy * yy) <= 5)
+				{
+					u_f[p] = TEMP_VARILLA;
+				}
+				else
+				{
+					u_f[p] = m[p] + (COEF*delta_t / (delta_x*delta_x))*(arriba + abajo + izquierda + derecha - 4 * m[p]);
+				}
+				
 			}
+			
+			else if (condicion == 1)
+				{
+					if (i == N - 1)
+					{
+						u_f[p] = TEMP_FRONTERA;
+					}
+					else if (i == 0)
+					{
+						u_f[p] = TEMP_FRONTERA;
+					}
+					if (j == N - 1)
+					{
+						u_f[p] = TEMP_FRONTERA;
+					}
+					else if (j == 0)
+					{
+						u_f[p] = TEMP_FRONTERA;
+					}
+				}
 		}
 	}
+}
+
+void copia(double *viejo, double *nuevo)
+{
+
+	
+		int i, j,posi;
+		for (i = 0; i < N; i++)
+		{
+
+			for (j = 0; j < N; j++)
+			{
+
+				posi = posicion(i, j);
+				nuevo[posi] = viejo[posi];
+			
+			}
+		}
+
 }
