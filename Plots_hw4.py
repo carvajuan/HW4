@@ -5,7 +5,19 @@ from mpl_toolkits import mplot3d
 
 datos=np.loadtxt("45.txt")
 dat=np.loadtxt("angulo.txt")
+promedio=np.loadtxt("promedios.txt")
+tiempo=np.linspace(0.0,65,1896)
 
+temp_inicial = np.loadtxt("Temperatura_inicial.txt")
+fijas=np.loadtxt("Fronteras_fijas.txt")
+abiertas=np.loadtxt("Fronteras_abiertas.txt")
+periodicas=np.loadtxt("Fronteras_periodicas.txt")
+
+
+lado_x= np.linspace(0, 50, 50)
+lado_y = np.linspace(0, 50, 50)
+
+X, Y = np.meshgrid(lado_x, lado_y)
 
 x=datos[:,0]
 y=datos[:,1]
@@ -29,8 +41,6 @@ plt.xlabel("x [m]")
 plt.show()
 
 
-
-
 plt.plot(x,y)
 plt.title("Con angulo de 45 grados")    
 plt.ylabel("y [m]")    
@@ -39,22 +49,67 @@ plt.show()
 
 
 
-x_2 = np.linspace(0, 50, 50)
-y_2 = np.linspace(0, 50, 50)
+#PARTE PARA GRAFICAR LA TEMPERATURA
 
-X, Y = np.meshgrid(x_2, y_2)
-Z = np.loadtxt("final.txt")
-
-fig = plt.figure()
+plt.figure()
 ax = plt.axes(projection='3d')
 
-ax.plot_surface(X, Y, Z, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+ax.plot_surface(X, Y, temp_inicial, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
-ax.set_title('TEMPERATURA t=10s')
-ax.view_init(60, 35)
-fig
+ax.set_title('Momneto inicial')
+plt.savefig("Momento_inicial.jpg")
+plt.show()
+
+
+plt.figure()
+ax = plt.axes(projection='3d')
+
+ax.plot_surface(X, Y, fijas, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.set_title('FRONTERAS FIJAS')
+plt.savefig("abiertas.jpg")
+plt.show()
+
+
+plt.figure()
+ax = plt.axes(projection='3d')
+
+ax.plot_surface(X, Y, abiertas, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.set_title('FRONTERAS ABIERTAS')
+plt.savefig("periodicas.jpg")
+plt.show()
+
+
+plt.figure()
+ax = plt.axes(projection='3d')
+
+ax.plot_surface(X, Y, periodicas, rstride=1, cstride=1,cmap='viridis', edgecolor='none')
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
+ax.set_title('FRONTERAS PERIODICAS')
+plt.savefig("ini.jpg")
+plt.show()
+
+
+
+
+for i in range(3):
+    pro=promedio[i,:]
+    
+    plt.plot(tiempo,pro)
+    
+plt.xlabel("Tiempo")  
+plt.ylabel("Temperatura")
+plt.title("Temperatura promedio")
+plt.show()
 
 
 
