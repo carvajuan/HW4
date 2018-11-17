@@ -24,7 +24,7 @@ void reinicia(double *time, double *eje_x,double *eje_y, double *ve_x, double *v
 }
 double dzdt(double v_x, double v_y)
 {
-	return -0.2*pow(v_x*v_x + v_y * v_y, 0.5)*v_x;
+	return -pow(v_x*v_x + v_y * v_y, 0.5)*v_x;
 }
 double dxdt(double Z)
 {
@@ -32,7 +32,7 @@ double dxdt(double Z)
 }
 double dfdt(double v_x,double v_y)
 {
-	return -10-0.2*pow(v_x*v_x + v_y * v_y, 0.5)*v_y;
+	return -10-pow(v_x*v_x + v_y * v_y, 0.5)*v_y;
 }
 double dydt(double F)
 {
@@ -109,8 +109,8 @@ void Kutta(double *t, double *x,double *y, double *z,double *f, double h) {
 }
 
 int main() {
-	double t, x,y, z,f, h;
-	h = 0.01;
+	double t,x,y,z,f,h;
+	h = 0.005;
 	int i,k,o;
 	int j = 1;
 	double *angulos;
@@ -157,11 +157,6 @@ int main() {
 	a.open("angulo.txt");
 	int s;
 	int r;
-	ofstream file;
-	file.open("longitud.txt");
-	
-
-
 
 	for (k=0;k<7;k++)
 	{
@@ -181,15 +176,6 @@ int main() {
 			Kutta(&t, &x, &y, &z, &f, h);
 
 		}
-		
-		
-
-		if (file.is_open())
-		{
-			file << s << " ";
-
-		}
-
 
 
 		for (r = 0; r < 500; r++)
@@ -205,8 +191,6 @@ int main() {
 		a << "\n";
 
 
-
-
 		reinicia(&t, &x, &y, &z, &f, angulos[k] * M_PI / 180);
 		s = 0;
 		r = 0;
@@ -220,14 +204,6 @@ int main() {
 			Kutta(&t, &x, &y, &z, &f, h);
 		}
 		
-
-		
-		if (file.is_open())
-		{
-			file << s<< " ";
-
-		}
-		file<< "\n";
 
 		for (r = 0; r < 500; r++)
 		{
@@ -245,7 +221,7 @@ int main() {
 	}
 	
 	a.close();
-	file.close();
+	
 	cout<<"El proyectil alcanza su mayor distancia en x cuando se lanza con un angulo de 20 grados"<<endl;
 	return 0;
 }
