@@ -25,7 +25,7 @@ y=datos[:,1]
 
 i=0
 
-
+plt.figure()
 while(i<13):
 
     x_i = dat[i,dat[i,:]!=-1]
@@ -35,17 +35,20 @@ while(i<13):
     plt.plot(x_i,y_i)
     
     
-plt.title("Con varios angulos")    
+plt.title("Trayectoria del proyectil con varios angulos")    
 plt.ylabel("y [m]")    
-plt.xlabel("x [m]")    
-plt.show()
+plt.xlabel("x [m]")  
+plt.savefig("Angulos.jpg")
 
 
+
+plt.figure()
 plt.plot(x,y)
 plt.title("Con angulo de 45 grados")    
 plt.ylabel("y [m]")    
 plt.xlabel("x [m]") 
-plt.show()
+plt.savefig("45.jpg")
+
 
 
 
@@ -58,9 +61,9 @@ ax.plot_surface(X, Y, temp_inicial, rstride=1, cstride=1,cmap='viridis', edgecol
 ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
-ax.set_title('Momneto inicial')
+ax.set_title('Momento inicial')
 plt.savefig("Momento_inicial.jpg")
-plt.show()
+
 
 
 plt.figure()
@@ -71,8 +74,8 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
 ax.set_title('FRONTERAS FIJAS')
-plt.savefig("abiertas.jpg")
-plt.show()
+plt.savefig("Fronteras_fijas.jpg")
+
 
 
 plt.figure()
@@ -83,8 +86,8 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
 ax.set_title('FRONTERAS ABIERTAS')
-plt.savefig("periodicas.jpg")
-plt.show()
+plt.savefig("Fronteras_abiertas.jpg")
+
 
 
 plt.figure()
@@ -95,8 +98,8 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 ax.set_zlabel('z')
 ax.set_title('FRONTERAS PERIODICAS')
-plt.savefig("ini.jpg")
-plt.show()
+plt.savefig("Fronteras_periodicas.jpg")
+
 
 
 
@@ -109,7 +112,7 @@ for i in range(3):
 plt.xlabel("Tiempo")  
 plt.ylabel("Temperatura")
 plt.title("Temperatura promedio")
-plt.show()
+plt.savefig("Temperatura_promedio.jpg")
 
 
 
