@@ -6,10 +6,10 @@
 
 #define N 50  //tamaño de la matriz 
 #define K 16200.0 //conductividad termica
-#define CP 820.0 //calor especifico
+#define CP 0.82 //calor especifico
 #define ROH 2.71 //densidad
-#define TEMP_VARILLA 100.0 //temperatura permanente de la varilla
-#define TEMP_FRONTERA 10.0 // temperatura de condicion de frontera
+#define TEMP_VARILLA 373.15 //temperatura permanente de la varilla
+#define TEMP_FRONTERA 283.15 // temperatura de condicion de frontera
 
 using namespace std;
 
@@ -23,15 +23,15 @@ double promedio(double *ma);
 double COEF=K/(CP*ROH); //coeficiente de difusion
 
 int main(){
-  
+    double *mat = (double *)malloc(N*N * sizeof(double));
     double *T_ANTES = (double*)malloc(N*N*sizeof(double)); 
     double *T_DESPUES =(double*)malloc(N*N*sizeof(double));
     double dx=1.0; //paso espacial
-    double dt=0.03429; //paso temporal
+    double dt=0.00003429; //paso temporal
     double alpha =(dt*COEF)/(dx*dx); 
     double *promedio_1, *promedio_2, *promedio_3;
-    double T_max = 65;
-    double ta = T_max / dt;
+    double T_max = 0.8;
+    int ta = T_max / dt;
     int e;
     promedio_1 = new double[ta];
     promedio_2 = new double[ta];
@@ -39,6 +39,11 @@ int main(){
 	
     ofstream pro; 
     pro.open("Temperatura_promedio.txt");
+	
+	
+    ofstream graficas;
+    graficas.open("Graficas.txt");
+	
 	
     //SE INICIALIZA
     iniciales(T_ANTES);
@@ -62,7 +67,7 @@ int main(){
 		}
 
 	}
-		archivo << "\n";
+	archivo << "\n";
      }
 	
 
@@ -70,9 +75,11 @@ int main(){
 	
 	
 	
-     //FRONTERAS FIJAS
+     //SE HACE LA EVOLUCION CON FRONTERAS FIJAS
      double t = 0;
      e = 0;
+     z = 0;
+     k = 0;
      while (t<T_max)
      {
 	paso(T_ANTES,T_DESPUES,dx,dt,1);
@@ -84,14 +91,58 @@ int main(){
 		pro << promedio_1[e] << " ";
 
 	}   
-	     
+	if (t>0.001 && t<0.00104 )
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
+
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+			
+
+		}
+		z = 0;
+		k = 0;
+		if (t > 0.01 && t < 0.01004)
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
+
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+			
+
+		}	     
 	    
 	copia(T_DESPUES,T_ANTES);
 	t = t + dt;
 	e=e+1;
      }
      pro<< "\n";
+
 	
+	
+   //SE ARCHIVA LA SOLUCION CON FRONTERAS FIJAS
    ofstream a;
    a.open("Fronteras_fijas.txt");
 
@@ -117,26 +168,67 @@ int main(){
     a.close();
 	
 	
-	
-    //FRONTERAS ABIERTAS
+    //SE HACE LA EVOLUCION CON FRONTERAS ABIERTAS
     iniciales(T_ANTES);
 
-
+    z = 0;
+    k = 0;
     t = 0;
     e = 0;
     while (t < T_max)
     {
 	paso(T_ANTES, T_DESPUES, dx, dt, 3);
 
-	promedio_1[e] = promedio(T_DESPUES);
+	promedio_2[e] = promedio(T_DESPUES);
 
 	if (pro.is_open())
 	{
 
-		pro << promedio_1[e] << " ";
+		pro << promedio_2[e] << " ";
 
 	}
+	if (t > 0.01 && t < 0.01004)
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
 
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+
+
+		}
+		z = 0;
+		k = 0;
+		if (t > 0.1 && t < 0.10004)
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
+
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+			
+
+		}
         copia(T_DESPUES, T_ANTES);
 	t = t + dt;
 	e=e+1;
@@ -147,7 +239,7 @@ int main(){
     pro << "\n";
 
 
-
+    //SE ARCHIVA LA SOLUCION CON FRONTERAS ABIERTAS
     ofstream f;
     f.open("Fronteras_abiertas.txt");
 
@@ -174,23 +266,70 @@ int main(){
 	
 	
 	
-    //FRONTERAS PERIODICAS
+    //SE DESARROLLA CON FRONTERAS PERIODICAS
 
     iniciales(T_ANTES);
-	
+    z = 0;
+    k = 0;
     t = 0;
     e = 0;
-    while (t < 65)
+    while (t < T_max)
     {
 	paso(T_ANTES, T_DESPUES, dx, dt, 2);
-	promedio_1[e] = promedio(T_DESPUES);
+	promedio_3[e] = promedio(T_DESPUES);
 
 	if (pro.is_open())
 	{
 
-		pro << promedio_1[e] << " ";
+		pro << promedio_3[e] << " ";
 
 	}
+	if (t > 0.01 && t < 0.01004)
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
+
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+
+
+		}
+		z = 0;
+		k = 0;
+		if (t > 0.1 && t < 0.10004)
+		{
+			for (z = 0; z < N; z++)
+			{
+				for (k = 0; k < N; k++)
+				{
+					pos = posicion(z, k);
+					if (graficas.is_open())
+					{
+
+						graficas << T_DESPUES[pos] << " ";
+
+					}
+
+				}
+				graficas << "\n";
+			}
+			graficas.close();
+
+		}   
+	    
+	    
+	    
+	    
 
         copia(T_DESPUES, T_ANTES);
 	t = t + dt;
@@ -199,7 +338,7 @@ int main(){
      pro << "\n";
      pro.close();
 
-
+     //SE ARCHIVA LA SOLUCION CON FRONTERAS PERIODICAS
      ofstream file;
      file.open("Fronteras_periodicas.txt");
 
@@ -327,19 +466,19 @@ void paso(double *m, double *u_f, double delta_x, double delta_t, double condici
 			{
 				if (i == N - 1)
 				{
-					abajo = m[posicion(0, j)];
+					abajo = m[posicion(1, j)];
 				}
 				else if (i == 0)
 				{
-					arriba = m[posicion(N - 1, j)];
+					arriba = m[posicion(N - 2, j)];
 				}
 				if (j == N - 1)
 				{
-					derecha= m[posicion(i, 0)];
+					derecha= m[posicion(i, 1)];
 				}
 				else if (j == 0)
 				{
-					izquierda = m[posicion(i, N - 1)];
+					izquierda = m[posicion(i, N - 2)];
 				}
 					u_f[p] = m[p] + (COEF*delta_t / (delta_x*delta_x))*(arriba + abajo + izquierda + derecha - 4 * m[p]);
 			}
