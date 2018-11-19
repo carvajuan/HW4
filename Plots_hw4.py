@@ -42,7 +42,8 @@ y=datos[:,1]
 
 
 i=0
-
+ang=["10","20","30","40","50","60","70"]
+cont=0
 plt.figure()
 while(i<13):
 
@@ -50,12 +51,13 @@ while(i<13):
     y_i = dat[(i+1),dat[(i+1),:]!=-1] 
     i=i+2
     
-    plt.plot(x_i,y_i)
-    
+    plt.plot(x_i,y_i,label=ang[cont])
+    cont=cont+1
     
 plt.title("Trayectoria del proyectil con varios angulos")    
 plt.ylabel("y [m]")    
 plt.xlabel("x [m]")  
+plt.legend()
 plt.savefig("Angulos.jpg")
 
 
@@ -209,16 +211,17 @@ plt.savefig("Fronteras_periodicas.jpg")
 
 
 
-
+lista=["fijas","abiertas","periodicas"]
 
 for i in range(3):
     pro=promedio[i,:]
     
-    plt.plot(tiempo,pro)
+    plt.plot(tiempo,pro,label=lista[i])
     
 plt.xlabel("Tiempo")  
 plt.ylabel("Temperatura")
 plt.title("Temperatura promedio")
+plt.legend()
 plt.savefig("Temperatura_promedio.jpg")
 
 
