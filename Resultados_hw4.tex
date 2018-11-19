@@ -1,6 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[spanish]{babel}
+\usepackage[english]{babel}
 \usepackage{graphicx}
 \usepackage{tabularx}
 \usepackage[absolute]{textpos} 
@@ -35,17 +35,12 @@ En el primer caso donde el angulo era de 45 grados se puede observar con clarida
     \label{fig2}
 \end{figure}
 
-Cuando se lanza con distintos angulos es claro que el proyectil alcanza su mayor distancia en el eje x con el angulo de 20 grados
-
+Cuando se lanza con distintos angulos es claro que el proyectil alcanza su mayor distancia en el eje x con el angulo de 20 grados, en cada trayectoria es notorio el efecto de la resistencia del aire sobre el proyectil
 
 \newpage
 \section{Ecuaciones diferenciales parciales}
 
-En este punto se nos pide que analizemos la evolucion de una seccion cuadrada de una calcita en contacto con una varilla a 100 grados centigrados 
-
-
-Aqui va la descripcion del segundo punto
-
+En este punto se nos pide que analizemos la evolucion de la temperatura en una seccion cuadrada de una piedra de calcita en contacto con una varilla a 100 grados centigrados. Mis unidades para este punto fueron gramos,kelvin, centimetros y joules. El sistema era una seccion cuadrada de 50 cm de calcita a 283.15 Kelvin en cuyo centro estaba una varilla de 10 cm de diametro a 373.15 Kelvin.
 
 \begin{figure}[h!]
     \centering
@@ -54,7 +49,7 @@ Aqui va la descripcion del segundo punto
     \label{fig3}
 \end{figure}
 
-
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{1_fijas.jpg}
@@ -70,7 +65,7 @@ Aqui va la descripcion del segundo punto
     \label{fig5}
 \end{figure}
 
-
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{Fronteras_fijas.jpg}
@@ -78,8 +73,10 @@ Aqui va la descripcion del segundo punto
     \label{fig12}
 \end{figure}
 
+En el primer caso del problema, con condiciones de frontera a 283.15 Kelvin, se observa que la temperatura de la calcita crece cerca a la varilla y se propaga a los bordes hasta alcanzar una condicion de equilibrio despues de 0.05 segundos, como se espera la temperatura promedio del sistema no supera los 373.15 Kelvin
 
 
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{1_abiertas.jpg}
@@ -95,7 +92,7 @@ Aqui va la descripcion del segundo punto
     \label{fig7}
 \end{figure}
 
-
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{Fronteras_abiertas.jpg}
@@ -103,7 +100,10 @@ Aqui va la descripcion del segundo punto
     \label{fig8}
 \end{figure}
 
+En el caso donde las condiciones de frontera son abiertas el sistema sigue incrementando en temperatura hasta que este alcanza la temperatura mas alta que haya, la cual es 373.15 Kelvin, se oberva que las esquinas de la seccion no crecen tan rapido como las demas partes y esto es debido a que los bordes tienen mas cercana la varilla.
 
+
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{1_periodicas.jpg}
@@ -125,8 +125,13 @@ Aqui va la descripcion del segundo punto
     \caption{Sistema en equilibrio con fronteras periodicas}
     \label{fig11}
 \end{figure}
+\newpage
+
+Con condiciones de frontera periodicas el sistema evoluciona muy parecido al caso anterior, por un corto periodo de tiempo el sistema con fronteras periodicas aumenta mas rapido su temperatura a comparacion con el otro, pero entre 0.2 y 0.3 segundos ya no hay diferencia notable y ambos alcanzan su temperatura de equilibrio al mismo tiempo. 
 
 
+
+\newpage
 \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.3]{Temperatura_promedio.jpg}
