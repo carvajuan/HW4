@@ -212,7 +212,7 @@ plt.savefig("Fronteras_periodicas.jpg")
 
 
 lista=["fijas","abiertas","periodicas"]
-
+plt.figure()
 for i in range(3):
     pro=promedio[i,:]
     
