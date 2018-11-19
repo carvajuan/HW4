@@ -140,7 +140,7 @@ int main() {
 	archivo.open("45.txt");
 	while (y>=0.0)
 	{
-		Kutta(&t, &x,&y, &z, &f,h);
+		
 
 		if (archivo.is_open()) 
 		{
@@ -148,6 +148,7 @@ int main() {
 			archivo << x << " "<<y<< "\n";
 
 		}
+		Kutta(&t, &x,&y, &z, &f,h);
 	}
 	archivo.close();
 	cout<<"La distancia recorrida en x cuando se lanza con un angulo de 45 grados es "<<x<<endl;
